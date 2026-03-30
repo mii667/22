@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>彼のLINE 本音翻訳辞典30選</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, #fff0f5 0%, #fce4ec 50%, #f8bbd0 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 16px 60px;
+    }
+
+    /* ヘッダー */
+    .header {
+      text-align: center;
+      padding: 40px 20px 24px;
+    }
+
+    .label {
+      display: inline-block;
+      background: linear-gradient(90deg, #f48fb1, #e91e8c);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 5px 18px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 900;
+      color: #c2185b;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .header h1 span {
+      font-size: 34px;
+      display: block;
+    }
+
+    .header-sub {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.8;
+    }
+
+    /* イントロ */
+    .intro-box {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 14px rgba(244,143,177,0.18);
+    }
+
+    .intro-box p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.9;
+    }
+
+    .intro-box .hl { color: #e91e8c; font-weight: 700; }
+
+    /* カテゴリーフィルター */
+    .filter-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .filter-btn {
+      padding: 7px 14px;
+      border-radius: 20px;
+      border: 2px solid #f48fb1;
+      background: white;
+      color: #e91e8c;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: linear-gradient(90deg, #f48fb1, #e91e8c);
+      color: white;
+      border-color: #e91e8c;
+    }
+
+    /* カウント表示 */
+    .count-badge {
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+
+    .count-badge span { color: #e91e8c; font-weight: 700; font-size: 16px; }
+
+    /* 辞典カード */
+    .dict-card {
+      background: white;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 16px rgba(244,143,177,0.13);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .dict-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(233,30,140,0.15);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      padding: 18px 20px;
+      gap: 14px;
+    }
+
+    .card-num {
+      background: linear-gradient(135deg, #f48fb1, #e91e8c);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .card-message-wrap {
+      flex: 1;
+    }
+
+    .card-category {
+      font-size: 10px;
+      color: #f06292;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .card-message {
+      font-size: 18px;
+      font-weight: 900;
+      color: #333;
+    }
+
+    .card-toggle {
+      font-size: 18px;
+      color: #f48fb1;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+
+    .dict-card.open .card-toggle {
+      transform: rotate(180deg);
+    }
+
+    .card-body {
+      display: none;
+      padding: 0 20px 22px;
+      animation: slideDown 0.3s ease;
+    }
+
+    .dict-card.open .card-body {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, #fce4ec, #f8bbd0, #fce4ec);
+      margin-bottom: 18px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-label.women { color: #9c27b0; }
+    .section-label.real { color: #e91e8c; }
+    .section-label.tip { color: #ff7043; }
+
+    .bubble-women {
+      background: #f3e5f5;
+      border-radius: 0 14px 14px 14px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #6a1b9a;
+      line-height: 1.7;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .bubble-real {
+      background: linear-gradient(135deg, #fce4ec, #fff0f5);
+      border-radius: 0 14px 14px 14px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #880e4f;
+      line-height: 1.7;
+      margin-bottom: 14px;
+      border-left: 3px solid #e91e8c;
+      font-weight: 600;
+    }
+
+    .bubble-tip {
+      background: #fff3e0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #bf360c;
+      line-height: 1.7;
+      border-left: 3px solid #ff7043;
+    }
+
+    /* フッター */
+    .footer {
+      text-align: center;
+      padding: 30px 20px 10px;
+      font-size: 11px;
+      color: #ccc;
+    }
+
+    /* 全件表示ボタン */
+    .show-all-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #f48fb1, #e91e8c);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(233,30,140,0.3);
+      transition: all 0.3s;
+      letter-spacing: 0.5px;
+    }
+
+    .show-all-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(233,30,140,0.4);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="label">✦ 無料プレゼント ✦</div>
+    <h1>
+      <span>彼のLINE</span>
+      本音翻訳辞典 30選
+    </h1>
+    <p class="header-sub">「え、そういう意味だったの…」<br>男のそっけないLINEには、ちゃんと理由がある。</p>
+  </div>
+
+  <div class="intro-box">
+    <p>
+      「<span class="hl">了解</span>」って何？もっと何か言ってよ…<br>
+      「<span class="hl">また今度</span>」って脈なし確定？<br>
+      「<span class="hl">忙しい</span>」って嫌われた？<br><br>
+      男性のLINEって、素っ気なさすぎて何を考えているか全然わからない…
+      そんな経験、ありませんか？<br><br>
+      この辞典では、男がよく送る30のLINEの<strong>「本当の意味」</strong>と
+      <strong>「おすすめの返し方」</strong>を解説します。
+      これを知るだけで、彼のLINEの見え方がガラッと変わります。
+    </p>
+  </div>
+
+  <div class="filter-wrap" id="filter-wrap"></div>
+  <div class="count-badge"><span id="visible-count">30</span> 件表示中</div>
+
+  <button class="show-all-btn" onclick="expandAll()">📖 全件まとめて開く</button>
+
+  <div id="dict-list"></div>
+
+  <div class="footer">© みい モテ育成 ｜ 無断転載禁止</div>
+</div>
+
+<script>
+const data = [
+  // カテゴリー：返信が素っ気ない
+  {
+    cat: "返信が素っ気ない",
+    msg: "「了解」",
+    women: "なんで「了解」だけ…？怒ってる？冷めた？もっと何か言ってよ…",
+    real: "男にとって「了解」は完全なOKサインです。怒ってもないし、冷めてもいない。ただ「わかった」という事実を伝えているだけ。男は「言葉を飾る必要がない相手」にほどシンプルに返します。素っ気ない＝心を許している証拠でもあります。",
+    tip: "「了解👍」とスタンプだけ返してみる。余裕があるように見えて、かえって彼が「もっと話したい」と思うきっかけになります。"
+  },
+  {
+    cat: "返信が素っ気ない",
+    msg: "「うん」",
+    women: "うん…って。テンション低い？もしかして私のこと好きじゃない？",
+    real: "「うん」は同意のサイン。男は感情を乗せた返信よりも、事実だけ伝えるほうが楽なので、これが「普通」の返信です。特にLINEでは文章を考えるのが面倒なので、短くなりがち。",
+    tip: "「うん」に過剰反応しない。次の話題に自然に移るか、少し間を置いてから次の話題を振ってみましょう。"
+  },
+  {
+    cat: "返信が素っ気ない",
+    msg: "「そうだね」",
+    women: "共感してるのかな？でも何か他に言ってほしい…会話が続かない…",
+    real: "男は話を「終わらせたい」のではなく、「今は深く話す気分じゃない」か「特に反論も賛成もない」という状態。悪い気持ちはない。ただ、今はあなたとの会話に全力を使えていないだけ。",
+    tip: "「そうだね」が続くときは、話題を変えるか「今忙しい？」と一言聞いてみる。気遣いが伝わり、彼が話しやすい雰囲気を作れます。"
+  },
+  {
+    cat: "返信が素っ気ない",
+    msg: "スタンプだけ",
+    women: "文字も打てないの？私のこと、どうでもいい？",
+    real: "スタンプを選んで送っているということは、ちゃんと読んでいる証拠。男は「スタンプ＝返信完了」と思っているので、脈なしではありません。むしろ、かわいいスタンプを選んでいるなら気があるサインの場合も。",
+    tip: "同じくスタンプで返す。または「そのスタンプかわいいね」と話題にすると自然な流れで会話が再開できます。"
+  },
+  {
+    cat: "返信が素っ気ない",
+    msg: "「わかった」",
+    women: "冷たい…なんかよそよそしい気がする。どうしたんだろう。",
+    real: "「了解」と同じで、受け取った・理解したという意思表示。男性LINEあるあるの「機能的な返信」です。感情は乗っていませんが、マイナスの感情もありません。",
+    tip: "「ありがとう！」とだけ返してみる。それ以上追いかけないことで、次に彼から連絡してくる可能性が上がります。"
+  },
+  // カテゴリー：忙しい・予定系
+  {
+    cat: "忙しい・予定系",
+    msg: "「今日は無理」",
+    women: "脈なし確定…？嫌われた？もう誘わないほうがいいのかな…",
+    real: "「今日は」という言葉がポイント。「無理」ではなく「今日は無理」なので、別の日はOKのサイン。好意がない相手には「また連絡するね」もなく、既読スルーするか「無理」だけ返すことが多い。",
+    tip: "「そっかー！また誘っていい？」と一言だけ返す。それ以上は聞かない。この余裕が彼を追いたくさせます。"
+  },
+  {
+    cat: "忙しい・予定系",
+    msg: "「今忙しい」",
+    women: "忙しいってどういうこと？私のことが優先じゃないの？",
+    real: "本当に忙しいことがほとんど。男は「忙しい」を理由に使う場合、嘘はあまりつかない。ただし「忙しい」が続くときは、優先順位の問題かもしれません。",
+    tip: "「オッケー！落ち着いたら連絡して〜」と返してすぐ引く。これが一番効果的。引くことで彼の「また話したい」という気持ちを引き出せます。"
+  },
+  {
+    cat: "忙しい・予定系",
+    msg: "「あとで連絡する」",
+    women: "あとでって…いつ？本当に連絡くる？待ってていいの？",
+    real: "7割は本当に後で連絡する気があります。残り3割は「今は返せない」という逃げ文句。どちらにせよ、連絡を待ち続けるのは損。自分の時間を楽しんでいると、彼から連絡が来やすくなります。",
+    tip: "「了解！」と返してスマホを置く。待っている自分を見せないことが大事。彼が連絡してきたら「あ、そうだった！」くらいのリアクションで十分です。"
+  },
+  {
+    cat: "忙しい・予定系",
+    msg: "「また今度」",
+    women: "また今度って具体的にいつ？これって断られてる？",
+    real: "「また今度」は確かに曖昧ですが、完全な断りではない場合が多い。ただ、具体的な日程を言わないのは「今すぐは動きたくない」というサインでもあります。",
+    tip: "「いつがいい？」とすぐ聞かない。1〜2週間後にさらっと「そういえば、今月空いてる？」と聞くのがベスト。間を空けることで相手も動きやすくなります。"
+  },
+  {
+    cat: "忙しい・予定系",
+    msg: "「行けるかも」",
+    women: "かも、ってどっちなの！？もやもやする…",
+    real: "男性の「行けるかも」は70%くらいの確率でOKのサイン。「絶対行く」と言わないのは、予定が変わったときに傷つけたくない&自分が逃げ道を作りたいから。",
+    tip: "「じゃあ仮予約！」と軽く流す。確定を求めすぎると男性はプレッシャーを感じてテンションが下がります。"
+  },
+  // カテゴリー：既読・遅返信
+  {
+    cat: "既読・遅返信",
+    msg: "長時間既読スルー",
+    women: "なんで返ってこないの…？嫌われた？何か失言した？もう終わりかも…",
+    real: "男性の既読スルーの8割は「後で返そうと思っていた」か「何て返せばいいか考えていた」のどちらか。特に感情的な内容・質問が含まれているLINEは返信が遅くなりがち。",
+    tip: "追撃LINEは絶対しない。1日待って何もなければ、全然違う話題で「これ見て笑った🤣」くらいの軽いLINEを送る。重い内容は忘れてもらえます。"
+  },
+  {
+    cat: "既読・遅返信",
+    msg: "「ごめん、気づかなかった」",
+    women: "本当に気づかなかっただけ？それとも後回しにしてた？",
+    real: "半々です。でも「ごめん」という言葉がある時点で、あなたのことを気にかけている証拠。本当にどうでもいい相手には謝りません。",
+    tip: "「全然気にしてない〜！」と明るく返す。責めないことで彼が罪悪感から解放され、逆にあなたへの好意が上がります。"
+  },
+  {
+    cat: "既読・遅返信",
+    msg: "「寝てた」",
+    women: "え、こんな時間に？本当に？それとも言い訳？",
+    real: "男性はわりと本当に寝ています。残業後にソファで落ちる、ゲームしながら寝落ち、など。嘘をつくくらいなら既読スルーするので、「寝てた」は案外本当のことが多い。",
+    tip: "「お疲れ様😊」だけ返す。それ以上聞かない。疲れてる相手に余裕を見せることで「癒される子」という印象が生まれます。"
+  },
+  // カテゴリー：曖昧・流す系
+  {
+    cat: "曖昧・流す系",
+    msg: "「どっちでもいいよ」",
+    women: "え、私に決めてほしいの？それとも興味ない？",
+    real: "男性は決断を女性に委ねることで「あなたの好きなことを優先したい」と思っているケースが多い。興味がないのではなく、あなたを喜ばせたい気持ちの表れ。",
+    tip: "「じゃあ私が決める！〇〇にしよう」とテキパキ決める。決断力のある女性は男性からとても魅力的に見えます。"
+  },
+  {
+    cat: "曖昧・流す系",
+    msg: "「任せる」",
+    women: "任せるって…無関心？それとも信頼してる？",
+    real: "「信頼している」か「どちらも問題ない」のどちらか。男性がよく使う言葉で、あなたの選択を尊重しているサインです。",
+    tip: "「ありがとう！じゃあ〇〇にするね」と気持ちよく決める。お礼を言いながら決断する子は「話が早くて一緒にいて楽」と思われます。"
+  },
+  {
+    cat: "曖昧・流す系",
+    msg: "「考えとく」",
+    women: "考えとくって…結局どうなるの？これはやんわり断り？",
+    real: "本当に考えている場合が多い。男性は即断しない傾向があります。「考えとく」はNOではなく「今すぐYESとは言えない」という意味。",
+    tip: "「うん、いつでもいいよ〜」とプレッシャーを与えない返しをする。急かすと「面倒な子」に見られるので、余裕を見せることが大切。"
+  },
+  {
+    cat: "曖昧・流す系",
+    msg: "「まあいいんじゃない」",
+    women: "「まあ」ってなに…？乗り気じゃない？",
+    real: "否定していないのでOKサイン。男性の「まあ」は「普通に良い」という肯定の意味が多い。女性ほど言葉に感情を乗せる習慣がないだけです。",
+    tip: "「よかった！じゃあそれで！」と明るく進める。彼の曖昧な表現に引きずられず、ポジティブに受け取ることが大事。"
+  },
+  // カテゴリー：突然そっけなくなる
+  {
+    cat: "突然そっけなくなる",
+    msg: "急に返信が遅くなった",
+    women: "急にどうしたの？何かした？冷めた？不安で仕方ない…",
+    real: "仕事が忙しい、疲れている、ゲームに没頭している、など外的要因がほとんど。あなたへの気持ちが変わったとは限らない。男性はフェーズごとに連絡頻度が変わる生き物です。",
+    tip: "何もしない。これが最強の対処法。自分の生活を充実させて、彼からLINEが来たときに楽しそうに返す。不安な顔は見せない。"
+  },
+  {
+    cat: "突然そっけなくなる",
+    msg: "「だね」「そうそう」だけが続く",
+    women: "会話が広がらない…つまらないの？私のこと好きじゃないのかも",
+    real: "今は話す気力が低い状態。男性は「話したいモード」と「そうでないモード」がはっきり分かれます。これは相手への感情とは別の問題。",
+    tip: "思い切って「今日はもう寝る〜！おやすみ」と会話を切り上げる。引き際を知っている女性は男性から「また話したい」と思われます。"
+  },
+  {
+    cat: "突然そっけなくなる",
+    msg: "返信はくるけど短い",
+    women: "ちゃんと話したいのに…もう飽きられた？",
+    real: "「忙しいけど無視はしたくない」という気持ちの表れ。短い返信でも返ってくる間は、あなたのことが頭にある証拠です。",
+    tip: "短い返信に合わせて、こちらも短く返す。テンポを合わせることで彼が「話しやすい」と感じ、自然に返信が長くなっていきます。"
+  },
+  // カテゴリー：感情・関係系
+  {
+    cat: "感情・関係系",
+    msg: "「別に怒ってないよ」",
+    women: "絶対怒ってる…でも何に怒ってるかわからない。どうしよう。",
+    real: "男性の「怒ってない」は2パターン。①本当に怒っていない（あなたの勘違い）、②怒っているが言語化できない。どちらにせよ、今すぐ解決しようとすると逆効果。",
+    tip: "「そっか！ならよかった」と一度引く。しつこく確認しない。時間が経つと男性は自然に切り替わります。"
+  },
+  {
+    cat: "感情・関係系",
+    msg: "「普通に好きだよ」",
+    women: "「普通に」ってどういう意味…？もっと強く好きじゃないってこと？",
+    real: "男性にとって「普通に」は強調表現！「普通に美味しい」「普通に楽しい」と同じで、「特別なことを言わなくても自然に好き」という意味です。これは脈ありサインです。",
+    tip: "「私も好きだよ」と素直に返す。ここで「普通にってどういう意味？」と掘り下げると男性は困惑します。素直に受け取ることが一番◎"
+  },
+  {
+    cat: "感情・関係系",
+    msg: "「なんでもない」",
+    women: "なんでもないわけないじゃん…何か隠してる？話してほしい",
+    real: "男性は感情を言語化するのが苦手。「なんでもない」は「うまく言葉にできない」「話す準備ができていない」ことが多い。追い詰めるとさらに閉じてしまいます。",
+    tip: "「そっか。何かあったらいつでも話して」と一言だけ添えて引く。逃げ道を作ってあげることで、彼が自分から話してくれる可能性が上がります。"
+  },
+  {
+    cat: "感情・関係系",
+    msg: "「ちょっと待って」",
+    women: "え、何？何を待てばいいの？いつまで待てばいい？",
+    real: "今すぐ返信できない状況にある、または何かしながらLINEをしている状態。数分〜数十分で返ってくることがほとんどです。",
+    tip: "「うん〜」と返して待つだけ。急かさないことで「この子は自分のペースを尊重してくれる」という安心感を与えられます。"
+  },
+  // カテゴリー：誘い・デート系
+  {
+    cat: "誘い・デート系",
+    msg: "「暇だったら行く」",
+    women: "「暇だったら」ってなに？私との時間、暇つぶしなの？",
+    real: "男性的には「積極的に行きたい」という意味合いで使っていることが多い。「絶対行く！」と強く言うのが恥ずかしいという感情から、こういう表現になりがち。",
+    tip: "「じゃあ暇なとき誘って〜」と返す。プレッシャーを与えず、彼が動きやすい環境を作ることが大事。"
+  },
+  {
+    cat: "誘い・デート系",
+    msg: "「また連絡するね」",
+    women: "本当に連絡くる？くれなかったらどうしよう…待ってていいの？",
+    real: "連絡しようという気持ちはある。ただし「いつか」なので、すぐ来るとは限らない。1週間待って来なければ、軽くこちらから連絡しても問題なし。",
+    tip: "「待ってるね！」ではなく「楽しみにしてる」くらいで留める。過度な期待を見せると相手がプレッシャーを感じることも。"
+  },
+  {
+    cat: "誘い・デート系",
+    msg: "「その日はちょっと…」",
+    women: "断られた…もう終わりかも。次は誘わないほうがいいかな",
+    real: "「ちょっと」という言葉が鍵。完全な断りではなく、その日の都合が悪いだけ。全力のNOなら「無理」「予定ある」と明確に断ります。",
+    tip: "「そっかー！他の日はどう？」と別の候補を出してみる。1回だけ。それでも曖昧なら一度引く。"
+  },
+  {
+    cat: "誘い・デート系",
+    msg: "デートの約束をしたのに「やっぱり無理かも」",
+    women: "ひどい…私のこと後回し？もう信用できない",
+    real: "急な仕事・体調不良・家族の用事など、外部要因がほとんど。ただし、これが繰り返される場合はあなたの優先度が低い可能性も。パターンで見極めることが大事。",
+    tip: "1回目は「そっか、残念！また決めよ」と笑顔で流す。2回以上続くようなら「最近ちょっと予定立てにくいね」と軽く一言だけ伝えてみる。"
+  },
+  // カテゴリー：気持ち・本音系
+  {
+    cat: "気持ち・本音系",
+    msg: "「〇〇（あなたの名前）って面白いね」",
+    women: "面白い…って友達として見られてる？可愛いって言ってほしかった",
+    real: "男性が「面白い」と言うのは最大級の褒め言葉のひとつ。一緒にいて楽しい、気を遣わなくていい、という意味で、好意があるから出る言葉です。",
+    tip: "「ありがとう！〇〇くんといると楽しい」と素直に返す。「面白い」という評価をポジティブに受け取ることで、彼との関係が深まります。"
+  },
+  {
+    cat: "気持ち・本音系",
+    msg: "「忙しくてごめんね」",
+    women: "謝られても…結局会えないじゃない。本当に気にしてる？",
+    real: "男性がわざわざ謝るのは、あなたのことを気にかけている証拠。「申し訳ない」という気持ちがある相手にしか言いません。気持ちはある、でも状況が追いついていない状態。",
+    tip: "「全然気にしてないよ、お仕事頑張って」と返す。プレッシャーを与えないことで、落ち着いたときに必ずあなたに連絡したいと思わせられます。"
+  },
+  {
+    cat: "気持ち・本音系",
+    msg: "突然「今何してる？」と送ってきた",
+    women: "え、急に？どういうこと？何か用事がある？",
+    real: "これはかなりの脈ありサイン。「会いたい」「話したい」という気持ちから送っています。男性は用もなく連絡しません。「今何してる？」は「あなたのことが気になっている」というメッセージ。",
+    tip: "「家でのんびりしてたよ〜！どうしたの？」と返す。聞き返すことで自然に会話が広がります。"
+  }
+];
+
+const categories = ["すべて", ...new Set(data.map(d => d.cat))];
+
+let currentCat = "すべて";
+
+function renderFilters() {
+  const wrap = document.getElementById('filter-wrap');
+  categories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (cat === 'すべて' ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => filterBy(cat, btn);
+    wrap.appendChild(btn);
+  });
+}
+
+function filterBy(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderList();
+}
+
+function renderList() {
+  const list = document.getElementById('dict-list');
+  list.innerHTML = '';
+  const filtered = currentCat === 'すべて' ? data : data.filter(d => d.cat === currentCat);
+  document.getElementById('visible-count').textContent = filtered.length;
+
+  filtered.forEach((item, i) => {
+    const globalIndex = data.indexOf(item);
+    const card = document.createElement('div');
+    card.className = 'dict-card';
+    card.id = `card-${globalIndex}`;
+    card.innerHTML = `
+      <div class="card-header" onclick="toggleCard(${globalIndex})">
+        <div class="card-num">${String(globalIndex + 1).padStart(2, '0')}</div>
+        <div class="card-message-wrap">
+          <div class="card-category">${item.cat}</div>
+          <div class="card-message">${item.msg}</div>
+        </div>
+        <div class="card-toggle">▼</div>
+      </div>
+      <div class="card-body">
+        <div class="divider"></div>
+        <div class="section-label women">💭 女性が思うこと</div>
+        <div class="bubble-women">${item.women}</div>
+        <div class="section-label real">💡 本当の意味</div>
+        <div class="bubble-real">${item.real}</div>
+        <div class="section-label tip">✏️ おすすめの返し方</div>
+        <div class="bubble-tip">${item.tip}</div>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function toggleCard(index) {
+  const card = document.getElementById(`card-${index}`);
+  card.classList.toggle('open');
+}
+
+function expandAll() {
+  const cards = document.querySelectorAll('.dict-card');
+  const allOpen = [...cards].every(c => c.classList.contains('open'));
+  cards.forEach(c => allOpen ? c.classList.remove('open') : c.classList.add('open'));
+  document.querySelector('.show-all-btn').textContent = allOpen ? '📖 全件まとめて開く' : '📕 全件まとめて閉じる';
+}
+
+renderFilters();
+renderList();
+</script>
+</body>
+</html>
